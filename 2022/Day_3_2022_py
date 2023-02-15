@@ -1,0 +1,60 @@
+## PART I
+
+import string
+
+with open('AC2022_Day3_input.txt') as file:
+    rucksacks = file.read().splitlines()
+
+
+listofStrings = list(string.ascii_lowercase) + (list(string.ascii_uppercase))
+listofInts = list(range(1,len(listofStrings)+1))
+dictionary = dict(zip(listofStrings,listofInts))
+## zip is an iterator that pairs together the elements of each list in the same position
+
+
+def get_priority(dictionary, item):
+    return dictionary.get(item)
+    
+    
+priorities = 0
+for i in range(int(len(rucksacks))):
+    compartment_1 = set(rucksacks[i][:int(len(rucksacks[i])/2)])
+    compartment_2 = set(rucksacks[i][int(len(rucksacks[i])/2):int(len(rucksacks[i]))])
+    
+    common_item = compartment_1.intersection(compartment_2)
+    print(common_item)
+    priorities += get_priority(dictionary,common_item.pop())
+
+print('The answer is: ', priorities)
+##The answer is: 8085
+
+
+
+
+## PART II
+import string
+
+
+with open('AC2022_Day3_input.txt') as file:
+    rucksacks = file.read().splitlines()
+
+
+listofStrings = list(string.ascii_lowercase) + (list(string.ascii_uppercase))
+listofInts = list(range(1,len(listofStrings)+1))
+dictionary = dict(zip(listofStrings,listofInts))
+## zip is an iterator that pairs together the elements of each list in the same position
+
+
+def get_priority(dictionary, item):
+    return dictionary.get(item)
+
+priorities = 0
+for i in range(0,len(rucksacks),3):
+
+    ## get elements
+    temp_list = rucksacks[i:(i+3)]
+    common_item = set(temp_list[0]).intersection(set(temp_list[1])).intersection(set(temp_list[2]))
+    priorities += get_priority(dictionary,common_item.pop())
+    
+print('The answer is: ', priorities)
+## The answer is:  2515
